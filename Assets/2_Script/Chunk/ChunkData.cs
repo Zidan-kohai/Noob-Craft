@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public struct ChunkData
+public class ChunkData
 {
     public Vector2Int Position;
+    public ChunkRenderer chunkRenderer;
     public BlockType[,,] BlocksType;
 }
