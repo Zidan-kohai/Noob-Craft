@@ -4,8 +4,10 @@ namespace KinematicCharacterController.Examples
 {
     public class ExamplePlayer : MonoBehaviour
     {
+        [SerializeField] private InputHandler inputHandler;
         public ExampleCharacterController Character;
         public ExampleCharacterCamera CharacterCamera;
+
 
         private const string MouseXInput = "Mouse X";
         private const string MouseYInput = "Mouse Y";
@@ -15,8 +17,6 @@ namespace KinematicCharacterController.Examples
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-
             // Tell camera to follow transform
             CharacterCamera.SetFollowTransform(Character.CameraFollowPoint);
 
@@ -27,10 +27,6 @@ namespace KinematicCharacterController.Examples
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
 
             HandleCharacterInput();
         }
@@ -50,18 +46,12 @@ namespace KinematicCharacterController.Examples
         private void HandleCameraInput()
         {
             // Create the look input vector for the camera
-            float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput);
-            float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput);
+            float mouseLookAxisUp = inputHandler.VerticalSwipe;
+            float mouseLookAxisRight = inputHandler.HorizontalSwipe;
             Vector3 lookInputVector = new Vector3(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
-            // Prevent moving the camera while the cursor isn't locked
-            if (Cursor.lockState != CursorLockMode.Locked)
-            {
-                lookInputVector = Vector3.zero;
-            }
-
             // Input for zooming the camera (disabled in WebGL because it can cause problems)
-            float scrollInput = -Input.GetAxis(MouseScrollInput);
+            float scrollInput = 0;//-Input.GetAxis(MouseScrollInput);
 #if UNITY_WEBGL
         scrollInput = 0f;
 #endif
@@ -81,12 +71,12 @@ namespace KinematicCharacterController.Examples
             PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
             // Build the CharacterInputs struct
-            characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
-            characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
+            characterInputs.MoveAxisForward = inputHandler.VerticalMovement;// Input.GetAxisRaw(VerticalInput);
+            characterInputs.MoveAxisRight = inputHandler.HorizontalMovement; //Input.GetAxisRaw(HorizontalInput);
             characterInputs.CameraRotation = CharacterCamera.Transform.rotation;
-            characterInputs.JumpDown = Input.GetKeyDown(KeyCode.Space);
-            characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
-            characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
+            characterInputs.JumpDown = inputHandler.Space; //Input.GetKeyDown(KeyCode.Space);
+            //characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
+            //characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
 
             // Apply inputs to character
             Character.SetInputs(ref characterInputs);
