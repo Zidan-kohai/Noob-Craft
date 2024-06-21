@@ -18,6 +18,7 @@ public class ChunkRenderer : MonoBehaviour
     private MeshCollider chunkCollider;
 
     private List<Vector3> verticies = new List<Vector3>();
+    private List<Vector2> uvs = new List<Vector2>();
     private List<int> triangles = new List<int>();
 
     private void Start()
@@ -32,6 +33,7 @@ public class ChunkRenderer : MonoBehaviour
 
     private void ChunkGenerate()
     {
+        uvs.Clear();
         verticies.Clear();
         triangles.Clear();
 
@@ -48,6 +50,7 @@ public class ChunkRenderer : MonoBehaviour
 
         chunkMesh.triangles = new int[0];
         chunkMesh.vertices = verticies.ToArray();
+        chunkMesh.uv = uvs.ToArray();
         chunkMesh.triangles = triangles.ToArray();
 
         chunkMesh.Optimize();
@@ -135,7 +138,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(0, 0, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(0, 1, 1) + position + Vector3.right) * blockScale);
 
-        
+
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f));
+
 
         triangles.Add(verticies.Count - 4);
         triangles.Add(verticies.Count - 3);
@@ -151,6 +159,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(-1, 1, 0) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(-1, 0, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(-1, 1, 1) + position + Vector3.right) * blockScale);
+
+
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f));
 
         triangles.Add(verticies.Count - 2);
         triangles.Add(verticies.Count - 3);
@@ -168,6 +182,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(0, 0, 0) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(0, 1, 0) + position + Vector3.right) * blockScale);
 
+
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f));
+
         triangles.Add(verticies.Count - 4);
         triangles.Add(verticies.Count - 3);
         triangles.Add(verticies.Count - 2);
@@ -183,6 +203,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(-1, 1, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(0, 0, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(0, 1, 1) + position + Vector3.right) * blockScale);
+
+
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 4f, 1f));
 
         triangles.Add(verticies.Count - 3);
         triangles.Add(verticies.Count - 4);
@@ -200,6 +226,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(0, 1, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(-1, 1, 1) + position + Vector3.right) * blockScale);
 
+
+        uvs.Add(new Vector2(1f / 16f * 8f, 1f - 1f / 16f * 3));
+        uvs.Add(new Vector2(1f / 16f * 8f, 1f - 1f / 16f * 2));
+        uvs.Add(new Vector2(1f / 16f * 9f, 1f - 1f / 16f * 3));
+        uvs.Add(new Vector2(1f / 16f * 9f, 1f - 1f / 16f * 2));
+
         triangles.Add(verticies.Count - 4);
         triangles.Add(verticies.Count - 3);
         triangles.Add(verticies.Count - 2);
@@ -215,6 +247,12 @@ public class ChunkRenderer : MonoBehaviour
         verticies.Add((new Vector3(-1, 0, 0) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(0, 0, 1) + position + Vector3.right) * blockScale);
         verticies.Add((new Vector3(-1, 0, 1) + position + Vector3.right) * blockScale);
+
+
+        uvs.Add(new Vector2(1f / 16f * 2f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 2f, 1f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f - 1f / 16f));
+        uvs.Add(new Vector2(1f / 16f * 3f, 1f));
 
         triangles.Add(verticies.Count - 3);
         triangles.Add(verticies.Count - 4);

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEditor;
+using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
@@ -9,7 +11,18 @@ public class InputHandler : MonoBehaviour
     public bool LeftMouseButtonDown { get; private set; }
     public bool RightMouseButtonDown { get; private set; }
 
+    private void Awake()
+    {
+
+    }
+
+
     private void Update()
+    {
+        DescInput();
+    }
+
+    private void DescInput()
     {
         HorizontalMovement = Input.GetAxis("Horizontal");
         VerticalMovement = Input.GetAxis("Vertical");
