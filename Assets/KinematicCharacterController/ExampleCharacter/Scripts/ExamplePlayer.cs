@@ -8,12 +8,7 @@ namespace KinematicCharacterController.Examples
         public ExampleCharacterController Character;
         public ExampleCharacterCamera CharacterCamera;
 
-
-        private const string MouseXInput = "Mouse X";
-        private const string MouseYInput = "Mouse Y";
         private const string MouseScrollInput = "Mouse ScrollWheel";
-        private const string HorizontalInput = "Horizontal";
-        private const string VerticalInput = "Vertical";
 
         private void Start()
         {
@@ -82,4 +77,6 @@ namespace KinematicCharacterController.Examples
             Character.SetInputs(ref characterInputs);
         }
     }
+
+
 }
