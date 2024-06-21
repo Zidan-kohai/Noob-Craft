@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using YG;
 
 public class InputHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private SwipeDetector swipeDetector;
     [SerializeField] private MyButton spaceButton;
 
+    [SerializeField] private GameObject mobileInout;
 
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
@@ -20,13 +22,28 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        MobileInputSubscribe();
+        if (YandexGame.EnvironmentData.isMobile)
+        {
+            MobileInputSubscribe();
+        }
+        else
+        {
+            mobileInout.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
-
 
     private void Update()
     {
-        MobileInputUpdate();
+        if (YandexGame.EnvironmentData.isMobile)
+        {
+            MobileInputUpdate();
+        }
+        else
+        {
+            DescInputUpdate();
+        }
     }
 
     private void DescInputUpdate()
@@ -58,12 +75,6 @@ public class InputHandler : MonoBehaviour
         spaceButton.OnHandUp += () => Space = false;
     }
 
-    private void MobileInputUnsubscribe()
-    {
-        spaceButton.OnHandDown -= () => Space = true;
-        spaceButton.OnHandUp -= () => Space = false;
-    }
-
     private IEnumerator WaitFrame(Action action)
     {
         yield return new WaitForEndOfFrame();
@@ -71,9 +82,4 @@ public class InputHandler : MonoBehaviour
         action.Invoke();
     }
 
-
-    private void OnDestroy()
-    {
-        MobileInputUnsubscribe();
-    }
 }
